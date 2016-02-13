@@ -36,7 +36,7 @@ case TOGGLE_TODO:
        {
          return t;
        }
-       var obj = Object.assign({}, t, {
+       let obj = Object.assign({}, t, {
          done: !t.done
       })
       return obj;

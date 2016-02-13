@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Input } from 'react-bootstrap';
-import { toggleTodo } from '../actions/ActionCreators';
+
 const Todo = props => (
   <Input
     type="checkbox"
