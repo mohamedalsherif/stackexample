@@ -1,4 +1,5 @@
-import { NEW_TODO, UPDATE_INPUT } from '../constants/ActionTypes';
+import { NEW_TODO, UPDATE_INPUT, TOGGLE_TODO} from '../constants/ActionTypes';
+
 
 const initialState = {
   input: '',
@@ -28,6 +29,24 @@ export default function (state = initialState, action) {
           ...state.todos,
         ],
       };
+case TOGGLE_TODO:
+    state['todos']=state['todos'].map((t, index)=>
+     {
+       if(index!=action.id)
+       {
+         return t;
+       }
+       var obj = Object.assign({}, t, {
+         done: !t.done
+      })
+      return obj;
+     });
+     return {
+       ...state,
+       todos: [
+         ...state.todos,
+       ],
+     };
     default:
       return state;
   }

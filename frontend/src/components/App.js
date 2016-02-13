@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Panel, Input } from 'react-bootstrap';
 
 import Todo from './Todo';
-import { createTodo, updateInput } from '../actions/ActionCreators';
+import { createTodo, updateInput, toggleTodo } from '../actions/ActionCreators';
 
 const styles = {
   width: '80%',
@@ -19,6 +19,8 @@ class App extends Component {
     input: PropTypes.string.isRequired,
     updateInput: PropTypes.func.isRequired,
     createTodo: PropTypes.func.isRequired,
+    toggleTodo: PropTypes.func.isRequired,
+
   };
 
   constructor(props) {
@@ -26,6 +28,7 @@ class App extends Component {
 
     this.handleNewTodo = this.handleNewTodo.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleToggleClicked = this.handleToggleClicked.bind(this);
   }
 
   handleNewTodo(event) {
@@ -38,9 +41,15 @@ class App extends Component {
     this.props.updateInput(this.refs.textField.getValue());
   }
 
+  handleToggleClicked(event)
+  {
+    var idOfTodo = event.currentTarget.id.substring(4);
+    this.props.toggleTodo(idOfTodo);
+  }
+
   render() {
     const todos = this.props.todos
-      .map((todo, index) => <Todo key={ `todo${index}` } { ...todo } />);
+      .map((todo, index) => <Todo onChangeMethod ={this.handleToggleClicked} id ={ `todo${index}` }  key={ `todo${index}` } { ...todo } />);
 
     return (
       <Panel header={ <h3>Kiron Todo App</h3> } style={ styles } >
@@ -61,5 +70,5 @@ class App extends Component {
 
 export default connect(
   state => state,
-  { createTodo, updateInput }
+  { createTodo, updateInput, toggleTodo }
 )(App);
